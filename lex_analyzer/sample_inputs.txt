@@ -1,0 +1,10 @@
+if input<10 then output1=100 else output2>=100
+if i.23>90 then out2=12E+34
+1.23E45
+1E+88
+1e-11
+if out >=23 then do else if 12<<1 then foo90=   45
+1.....23E1x
+.0.3
+then 12do
+!

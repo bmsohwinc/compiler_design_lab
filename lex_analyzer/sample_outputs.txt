@@ -1,0 +1,154 @@
+
+-------- RUN #1 --------
+Your statment (Enter `!` (exclamation) to exit): 
+[ T ] Keyword detected
+[ T ] Identifier detected
+[ T ] Relop detected
+[ T ] Number detected
+[ T ] Keyword detected
+[ T ] Identifier detected
+[ T ] Relop detected
+[ T ] Number detected
+[ T ] Keyword detected
+[ T ] Identifier detected
+[ T ] Relop detected
+[ T ] Number detected
+Tokens for the statement [ if input<10 then output1=100 else output2>=100 ] are: 
+[ keyword_if, if ]
+[ identifier, input ]
+[ relop_LT, < ]
+[ number, 10 ]
+[ keyword_then, then ]
+[ identifier, output1 ]
+[ relop_EQ, = ]
+[ number, 100 ]
+[ keyword_else, else ]
+[ identifier, output2 ]
+[ relop_GE, >= ]
+[ number, 100 ]
+====================================
+
+-------- RUN #2 --------
+Your statment (Enter `!` (exclamation) to exit): 
+[ T ] Keyword detected
+[ T ] Identifier detected
+[ T ] Number detected
+[ T ] Relop detected
+[ T ] Number detected
+[ T ] Keyword detected
+[ T ] Identifier detected
+[ T ] Relop detected
+[ T ] Number detected
+Tokens for the statement [ if i.23>90 then out2=12E+34 ] are: 
+[ keyword_if, if ]
+[ identifier, i ]
+[ undefined, . ]
+[ number, 23 ]
+[ relop_GT, > ]
+[ number, 90 ]
+[ keyword_then, then ]
+[ identifier, out2 ]
+[ relop_EQ, = ]
+[ number, 12E+34 ]
+====================================
+
+-------- RUN #3 --------
+Your statment (Enter `!` (exclamation) to exit): 
+[ T ] Number detected
+Tokens for the statement [ 1.23E45 ] are: 
+[ number, 1.23E45 ]
+====================================
+
+-------- RUN #4 --------
+Your statment (Enter `!` (exclamation) to exit): 
+[ T ] Number detected
+Tokens for the statement [ 1E+88 ] are: 
+[ number, 1E+88 ]
+====================================
+
+-------- RUN #5 --------
+Your statment (Enter `!` (exclamation) to exit): 
+[ T ] Number detected
+[ T ] Identifier detected
+[ T ] Number detected
+Tokens for the statement [ 1e-11 ] are: 
+[ number, 1 ]
+[ identifier, e ]
+[ undefined, - ]
+[ number, 11 ]
+====================================
+
+-------- RUN #6 --------
+Your statment (Enter `!` (exclamation) to exit): 
+[ T ] Keyword detected
+[ T ] Identifier detected
+[ T ] Relop detected
+[ T ] Number detected
+[ T ] Keyword detected
+[ T ] Identifier detected
+[ T ] Keyword detected
+[ T ] Keyword detected
+[ T ] Number detected
+[ T ] Relop detected
+[ T ] Relop detected
+[ T ] Number detected
+[ T ] Keyword detected
+[ T ] Identifier detected
+[ T ] Relop detected
+[ T ] Number detected
+Tokens for the statement [ if out >=23 then do else if 12<<1 then foo90=   45 ] are: 
+[ keyword_if, if ]
+[ identifier, out ]
+[ relop_GE, >= ]
+[ number, 23 ]
+[ keyword_then, then ]
+[ identifier, do ]
+[ keyword_else, else ]
+[ keyword_if, if ]
+[ number, 12 ]
+[ relop_LT, < ]
+[ relop_LT, < ]
+[ number, 1 ]
+[ keyword_then, then ]
+[ identifier, foo90 ]
+[ relop_EQ, = ]
+[ number, 45 ]
+====================================
+
+-------- RUN #7 --------
+Your statment (Enter `!` (exclamation) to exit): 
+[ T ] Number detected
+[ T ] Number detected
+[ T ] Identifier detected
+Tokens for the statement [ 1.....23E1x ] are: 
+[ number, 1 ]
+[ undefined, . ]
+[ undefined, . ]
+[ undefined, . ]
+[ undefined, . ]
+[ undefined, . ]
+[ number, 23E1 ]
+[ identifier, x ]
+====================================
+
+-------- RUN #8 --------
+Your statment (Enter `!` (exclamation) to exit): 
+[ T ] Number detected
+Tokens for the statement [ .0.3 ] are: 
+[ undefined, . ]
+[ number, 0.3 ]
+====================================
+
+-------- RUN #9 --------
+Your statment (Enter `!` (exclamation) to exit): 
+[ T ] Keyword detected
+[ T ] Number detected
+[ T ] Identifier detected
+Tokens for the statement [ then 12do ] are: 
+[ keyword_then, then ]
+[ number, 12 ]
+[ identifier, do ]
+====================================
+
+-------- RUN #10 --------
+Your statment (Enter `!` (exclamation) to exit): 
