@@ -1,0 +1,32 @@
+Enter strings...
+Found token =  2    KEYWORD |	lexeme = if
+Found token =  3 IDENTIFIER |	lexeme = not
+Found token =  3 IDENTIFIER |	lexeme = this
+Found token =  3 IDENTIFIER |	lexeme = then45
+Done with line_number: 1
+Found token =  3 IDENTIFIER |	lexeme = this
+Done with line_number: 2
+Found token =  2    KEYWORD |	lexeme = then
+Done with line_number: 3
+Found token =  3 IDENTIFIER |	lexeme = taht1
+Done with line_number: 4
+Found token =  2    KEYWORD |	lexeme = if
+Found token =  3 IDENTIFIER |	lexeme = input
+Found token =  4      RELOP |	lexeme = =
+Found token =  1     NUMBER |	lexeme = 12.1
+Found token =  3 IDENTIFIER |	lexeme = E
+Found token =  2    KEYWORD |	lexeme = then
+Found token =  3 IDENTIFIER |	lexeme = output
+Found token =  4      RELOP |	lexeme = =
+Found token =  1     NUMBER |	lexeme = 2E2
+Done with line_number: 5
+Found token =  2    KEYWORD |	lexeme = else
+Found token =  2    KEYWORD |	lexeme = if
+Found token =  3 IDENTIFIER |	lexeme = input
+Found token =  4      RELOP |	lexeme = =
+Found token =  1     NUMBER |	lexeme = 9
+Found token =  2    KEYWORD |	lexeme = then
+Found token =  3 IDENTIFIER |	lexeme = output
+Found token =  4      RELOP |	lexeme = =
+Found token =  1     NUMBER |	lexeme = 87
+Done with line_number: 6

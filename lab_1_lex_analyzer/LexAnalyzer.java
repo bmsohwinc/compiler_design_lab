@@ -161,16 +161,19 @@ class Tokenizer {
                     else {
                         char chnxt = theStatement.charAt(position + 1);
                         if (chnxt == '>') {
+                            // <>
                             allTokens.add(new Token("relop_NE", "<>"));
                             position += 2;
                             return position;
                         }
                         else if (chnxt == '=') {
+                            // <=
                             allTokens.add(new Token("relop_LE", "<="));
                             position += 2;
                             return position;
                         }
                         else {
+                            // <
                             allTokens.add(new Token("relop_LT", "<"));
                             position++;
                             return position;

@@ -1,0 +1,6 @@
+if not this then45
+this
+then
+taht1
+if input = 12.1E then output = 2E2
+else if input = 9 then output = 87
