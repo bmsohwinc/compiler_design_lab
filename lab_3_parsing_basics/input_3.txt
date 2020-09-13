@@ -1,0 +1,11 @@
+S
+aABx
+A
+bC
+C
+bcC e
+B
+d
+-1
+S
+abbcbcdx

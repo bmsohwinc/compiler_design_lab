@@ -1,37 +1,44 @@
 %{
 #include <stdio.h>
-// GENERAL
-#define CONDITIONAL 0
-#define DATATYPE    1
-#define IOS         2
-#define LOOPER      3
-#define MAINFUNC    4
-#define RELOP       5
-#define ARITHMETIC  6
-#define SEPARATOR   7
-#define NUMBER      8
-#define IDENTIFIER  9
 // RELOPS
-#define R_LT  0
-#define R_LE  1
-#define R_GT  2
-#define R_GE  3
-#define R_EQ  4
-#define R_NE  5
+#define R_LT  1
+#define R_LE  2
+#define R_GT  3
+#define R_GE  4
+#define R_EQ  5
+#define R_NE  6
 // ARITHMETIC 
-#define A_AD  6
-#define A_SU  7
-#define A_ML  8
-#define A_DV  9
+#define A_AD  7
+#define A_SU  8
+#define A_ML  9
+#define A_DV  10
 // SEPARATORS
-#define S_SC  10
-#define S_CM  11
-#define S_PRO 12
-#define S_PRC 13
-#define S_CBO 14
-#define S_CBC 15
+#define S_SC  11
+#define S_CM  12
+#define S_PRO 13
+#define S_PRC 14
+#define S_CBO 15
+#define S_CBC 16
+// DATATYPE
+#define D_INT 17
+#define D_FLT 18
+// IOS
+#define I_RD  19
+#define I_PRT 20
+// LOOPER
+#define L_FOR 21
+#define L_WHL 22
+// MAINFUNC
+#define F_MAIN 23
+// CONDITIONALS
+#define C_IF  24
+#define C_ELS 25
+// GENERAL
+#define NUMBER      26
+#define IDENTIFIER  27
+
 // IDs
-int token_id = 1;
+int token_id = 0;
 int line_number = 1;
 %}
 
@@ -53,53 +60,80 @@ whitespaces [ \t]
 
 %%
 {conditionals} {
-    printf("Found CONDITIONAL: ");
-    return token_id++;
+    printf("Found %12s: ", "CONDITIONAL");
+    token_id++;
+    if (!strcmp(yytext, "if")) return C_IF;
+    if (!strcmp(yytext, "else")) return C_ELS;
 }
 
 {datatypes} {
-    printf("Found DATATYPE: ");
-    return token_id++;
+    printf("Found %12s: ", "DATATYPE");
+    token_id++;
+    if (!strcmp(yytext, "int")) return D_INT;
+    if (!strcmp(yytext, "float")) return D_FLT;
 }
 
 {ios} {
-    printf("Found INPUT/OUTPUT: ");
-    return token_id++;
+    printf("Found %12s: ", "IN/OUTPUT");
+    token_id++;
+    if (!strcmp(yytext, "read")) return I_RD;
+    if (!strcmp(yytext, "print")) return I_PRT;
 }
 
 {loopers} {
-    printf("Found LOOPER: ");
-    return token_id++;
+    printf("Found %12s: ", "LOOPER");
+    token_id++;
+    if (!strcmp(yytext, "for")) return L_FOR;
+    if (!strcmp(yytext, "while")) return L_WHL;
 }
 
 {main} {
-    printf("Found MAIN: ");
-    return token_id++;
+    printf("Found %12s: ", "MAIN");
+    token_id++;
+    return F_MAIN;
 }
 
 {relops} {
-    printf("Found RELOP: ");
-    return token_id++;
+    printf("Found %12s: ", "RELOP");
+    token_id++;
+    if (!strcmp(yytext, "<")) return R_LT;
+    if (!strcmp(yytext, "<=")) return R_LE;
+    if (!strcmp(yytext, ">")) return R_GT;
+    if (!strcmp(yytext, ">=")) return R_GE;
+    if (!strcmp(yytext, "=")) return R_EQ;
+    if (!strcmp(yytext, "!=")) return R_NE;
 }
 
 {operators} {
-    printf("Found ARITHMETIC: ");
-    return token_id++;
+    printf("Found %12s: ", "ARITHMETIC");
+    token_id++;
+    if (!strcmp(yytext, "+")) return A_AD;
+    if (!strcmp(yytext, "-")) return A_SU;
+    if (!strcmp(yytext, "*")) return A_ML;
+    if (!strcmp(yytext, "/")) return A_DV;
 }
 
 {separators} {
-    printf("Found SEPARATOR: ");
-    return token_id++;
+    printf("Found %12s: ", "SEPARATOR");
+    token_id++;
+    if (!strcmp(yytext, ";")) return S_SC;
+    if (!strcmp(yytext, ",")) return S_CM;
+    if (!strcmp(yytext, "(")) return S_PRO;
+    if (!strcmp(yytext, ")")) return S_PRC;
+    if (!strcmp(yytext, "{")) return S_CBO;
+    if (!strcmp(yytext, "}")) return S_CBC;
 }
 
 {number} {
-    printf("Found NUMBER: ");
-    return token_id++;
+    printf("Found %12s: ", "NUMBER");
+    token_id++;
+    return NUMBER;
 }
 
 {var} {
-    printf("Found IDENTIFIER: ");
-    return token_id++;
+    printf("Found %12s: ", "IDENTIFIER");
+    token_id++;
+    return IDENTIFIER;
 }
 
 {whitespaces} {}
@@ -121,42 +155,12 @@ int yywrap(void) {
 
 int main() {
     printf("Enter strings...\n");
-    int token;
+    int token_type_id;
     // Just comment the below line to take live input
     yyin = fopen("myfile.txt", "r");
-    while((token = yylex()) != 0) {
-        printf("Token_ID = %3d\tlexeme = %s\n", token, yytext);
+    while((token_type_id = yylex()) != 0) {
+        printf("\tTokenID = %3d\tTokenTypeID = %2d\tlexeme = %s\n", token_id, token_type_id, yytext);
     }
     
     return 0;
 }
-
-
-
-// switch(yytext) {
-    //     case "<":
-    //         return R_LT;
-    //     case "<=":
-    //         return R_LE;
-    //     case ">":
-    //         return R_GT;
-    //     case ">=":
-    //         return R_GE;
-    //     case "=":
-    //         return R_EQ;
-    //     case "!=":
-    //         return R_NE;
-    // }
-
-    // switch(yytext) {
-    //     case "+":
-    //         return A_AD;
-    //     case "-":
-    //         return A_SU;
-    //     case "*":
-    //         return A_ML;
-    //     case "/":
-    //         return A_DV;
-    // }
-
-// put_to_table(token_id++, yytext);
