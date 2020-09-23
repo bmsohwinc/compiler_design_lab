@@ -1,5 +1,5 @@
 S
-aAd aB
+aaAd aB aaB
 A
 a ab
 B

@@ -1,0 +1,7 @@
+E,T,F,EX,TX
+id,(,),*,+,_eps,$
+E TEX
+EX +TEX _eps
+T FTX
+TX *FTX _eps
+F (E) id

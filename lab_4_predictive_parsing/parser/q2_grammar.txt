@@ -1,0 +1,28 @@
+AE,BE,D,DL,E,F,ES,IOS,IS,NE,P,PE,RE,S,SL,T,TY,VL,WS,VX,EH,IX,BX,AX,RX,EY,TX
++,-,*,/,=,<,>,(,),{,},:=,;,and,else,end,ic,id,if,int,do,fc,float,not,or,print,prog,scan,str,then,while,_eps,$
+P progDLSLend
+DL DDL _eps
+D TYVL;
+TY int float
+VL idVX
+VX VL _eps
+SL SSL _eps
+S EH IS WS IOS
+EH id:=E;
+IS ifBEthenSLIX
+IX end elseSLend
+WS whileBEdoSLend
+IOS printPE scanid
+PE E str
+BE AEBX
+BX orAEBX _eps
+AE NEAX
+AX andNEAX _eps
+NE notNE {BE} RE
+RE ERX
+RX =E <E >E
+E TEY
+EY +TEY -TEY _eps
+T FTX
+TX *FTX /FTX _eps
+F (E) id ic fc
