@@ -1,6 +1,0 @@
-5 ( ) * + i
-3 E T F
-E
-E E+T T -1
-T T*F F -1
-F (E) i -1

@@ -36,10 +36,17 @@
 
 ## Output
 The code outputs:
+	
 	1. The Left Factored Grammar
+
 	2. The Non-Left-Recursive Grammar
+	
 	3. The First Sets of each Non Terminal
+	
 	4. The DFA of States and Items
+	
 	5. The Parse Table
+	
 	6. The Actions during the Parsing of String
+	
 	7. Whether String was Accepted or Rejected

@@ -1,7 +1,0 @@
-Enter number of Terminals and them: Enter number of Non-Terminals and them: Enter the Grammar now.
-Enter the Non Terminal: Enter the productions (-1 to exit): Enter the Non Terminal: Enter the productions (-1 to exit): Enter the Non Terminal: Enter the productions (-1 to exit): 
-
-E	->	E+T, T, 
-F	->	(E), i, 
-T	->	T*F, F, 
-
