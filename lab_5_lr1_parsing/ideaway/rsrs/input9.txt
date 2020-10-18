@@ -1,0 +1,5 @@
+S C
+c d #
+S cd dd cc cdc ccd cdcd cdd
+S CC
+C cC d

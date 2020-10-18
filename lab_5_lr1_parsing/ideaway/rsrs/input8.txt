@@ -1,0 +1,4 @@
+S
+a b #
+S abb ab abab aabb aaab
+S aSb #

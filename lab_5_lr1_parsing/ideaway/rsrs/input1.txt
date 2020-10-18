@@ -1,0 +1,7 @@
+S A B C
+a b c x d #
+S abbcbcdx
+S aABx
+A bC
+C bcC #
+B d

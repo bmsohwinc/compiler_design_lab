@@ -1,0 +1,6 @@
+S L R
+= * i
+S i=i i*i i *i i=*i i**
+S L=R R
+L *R i
+R L

@@ -1,0 +1,9 @@
+S B D C E F
+a h c b g f #
+S xa
+S aBDh
+B cC
+C bC #
+D EF
+E g #
+F f #

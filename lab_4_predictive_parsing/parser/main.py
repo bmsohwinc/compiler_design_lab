@@ -68,6 +68,7 @@ def parseTheTokens(theParseTable, theSSym, theTokens, Terms):
         print('%50s %50s %50s' % (str(theParseStack), str(theTokens[cti:]), '!! PARSE ERROR. Stack exhausted. But inputs exist'))
         return False
 
+
 def main():
     # print('This is Main')
     Qno = int(input('Enter Q.No: '))

@@ -1,0 +1,872 @@
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java -ea -Didea.test.cyclic.buffer.size=1048576 -javaagent:/opt/idea-IC-202.6948.69/lib/idea_rt.jar=37631:/opt/idea-IC-202.6948.69/bin -Dfile.encoding=UTF-8 -classpath /opt/idea-IC-202.6948.69/lib/idea_rt.jar:/opt/idea-IC-202.6948.69/plugins/junit/lib/junit5-rt.jar:/opt/idea-IC-202.6948.69/plugins/junit/lib/junit-rt.jar:/home/dell/Documents/Sem-7-Institute's/courses/CD/compiler_design_lab/lab_5_lr1_parsing/ideaway/out/production/ideaway:/home/dell/.m2/repository/junit/junit/4.12/junit-4.12.jar:/home/dell/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar com.intellij.rt.junit.JUnitStarter -ideVersion5 -junit4 com.cdlabthree.AllTests,run10
+==================================
+
+BEFORE ANY OPERATION
+- - - - - - - - -
+
+T	-->	T*F | F |
+E	-->	E+T | T |
+F	-->	(E) | i |
+
+==================================
+
+--- FINAL ---
+T --> [F, T*F]
+E --> [E+T, T]
+F --> [(E), i]
+==================================
+
+AFTER LEFT FACTORING
+- - - - - - - - -
+
+T	-->	F | T*F |
+E	-->	E+T | T |
+F	-->	(E) | i |
+
+==================================
+
+Left Recursion Detected! Symbol: T Proc: T*F
+Left Recursion Detected! Symbol: E Proc: E+T
+
+>> The corrected Grammar...
+A --> [*FA, #]
+B --> [+TB, #]
+T --> [FA]
+E --> [TB]
+F --> [(E), i]
+==================================
+
+AFTER REMOVING LEFT RECURSION
+- - - - - - - - -
+
+A	-->	*FA | # |
+B	-->	+TB | # |
+T	-->	FA |
+E	-->	TB |
+F	-->	(E) | i |
+
+==================================
+
+THE FIRST SETS ARE:
+A	-->	[#, *]
+B	-->	[#, +]
+T	-->	[(, i]
+E	-->	[(, i]
+F	-->	[(, i]
+
+==================================
+
+Seed Item: [E'|.E|$|]
+>>> Closure:
+	Before: [E'|.E|$|]
+	After:  [T|.FA|$,+|, E'|.E|$|, F|.(E)|$,*,+|, E|.TB|$|, F|.i|$,*,+|]
+<<<
+* Checking state #0: E'|.E|$|,E|.TB|$|,F|.(E)|$,*,+|,F|.i|$,*,+|,T|.FA|$,+|
+	Item: T|.FA|$,+|
+		... The GOTO: Before: .FA and After: F.A
+		Added (F, [T|F.A|$,+|]) to the nxtEleMap
+	Item: E'|.E|$|
+		... The GOTO: Before: .E and After: E.
+		Added (E, [E'|E.|$|]) to the nxtEleMap
+	Item: F|.(E)|$,*,+|
+		... The GOTO: Before: .(E) and After: (.E)
+		Added ((, [F|(.E)|$,*,+|]) to the nxtEleMap
+	Item: E|.TB|$|
+		... The GOTO: Before: .TB and After: T.B
+		Added (T, [E|T.B|$|]) to the nxtEleMap
+	Item: F|.i|$,*,+|
+		... The GOTO: Before: .i and After: i.
+		Added (i, [F|i.|$,*,+|]) to the nxtEleMap
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [E|T.B|$|]
+	After:  [E|T.B|$|, B|.+TB|$|, B|.|$|]
+<<<
+		Nxt Elem: T and Created state: B|.+TB|$|,B|.|$|,E|T.B|$|
+			Fresh State #1 added to Queue
+>>> Closure:
+	Before: [E'|E.|$|]
+	After:  [E'|E.|$|]
+<<<
+		Nxt Elem: E and Created state: E'|E.|$|
+			Fresh State #2 added to Queue
+>>> Closure:
+	Before: [T|F.A|$,+|]
+	After:  [T|F.A|$,+|, A|.|$,+|, A|.*FA|$,+|]
+<<<
+		Nxt Elem: F and Created state: A|.*FA|$,+|,A|.|$,+|,T|F.A|$,+|
+			Fresh State #3 added to Queue
+>>> Closure:
+	Before: [F|(.E)|$,*,+|]
+	After:  [F|.(E)|),*,+|, E|.TB|)|, F|(.E)|$,*,+|, F|.i|),*,+|, T|.FA|),+|]
+<<<
+		Nxt Elem: ( and Created state: E|.TB|)|,F|(.E)|$,*,+|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+|
+			Fresh State #4 added to Queue
+>>> Closure:
+	Before: [F|i.|$,*,+|]
+	After:  [F|i.|$,*,+|]
+<<<
+		Nxt Elem: i and Created state: F|i.|$,*,+|
+			Fresh State #5 added to Queue
+		. Updated the topState #0:E'|.E|$|,E|.TB|$|,F|.(E)|$,*,+|,F|.i|$,*,+|,T|.FA|$,+| to add NextState: {T=1, E=2, F=3, (=4, i=5}
+* Checking state #1: B|.+TB|$|,B|.|$|,E|T.B|$|
+	Item: E|T.B|$|
+		... The GOTO: Before: T.B and After: TB.
+		Added (B, [E|TB.|$|]) to the nxtEleMap
+	Item: B|.+TB|$|
+		... The GOTO: Before: .+TB and After: +.TB
+		Added (+, [B|+.TB|$|]) to the nxtEleMap
+	Item: B|.|$|
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [E|TB.|$|]
+	After:  [E|TB.|$|]
+<<<
+		Nxt Elem: B and Created state: E|TB.|$|
+			Fresh State #6 added to Queue
+>>> Closure:
+	Before: [B|+.TB|$|]
+	After:  [T|.FA|$,+|, F|.(E)|$,*,+|, F|.i|$,*,+|, B|+.TB|$|]
+<<<
+		Nxt Elem: + and Created state: B|+.TB|$|,F|.(E)|$,*,+|,F|.i|$,*,+|,T|.FA|$,+|
+			Fresh State #7 added to Queue
+		. Updated the topState #1:B|.+TB|$|,B|.|$|,E|T.B|$| to add NextState: {B=6, +=7}
+* Checking state #2: E'|E.|$|
+	Item: E'|E.|$|
+	-- Completed grouping the Items based on nextElement
+		. Updated the topState #2:E'|E.|$| to add NextState: {}
+* Checking state #3: A|.*FA|$,+|,A|.|$,+|,T|F.A|$,+|
+	Item: T|F.A|$,+|
+		... The GOTO: Before: F.A and After: FA.
+		Added (A, [T|FA.|$,+|]) to the nxtEleMap
+	Item: A|.|$,+|
+	Item: A|.*FA|$,+|
+		... The GOTO: Before: .*FA and After: *.FA
+		Added (*, [A|*.FA|$,+|]) to the nxtEleMap
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [T|FA.|$,+|]
+	After:  [T|FA.|$,+|]
+<<<
+		Nxt Elem: A and Created state: T|FA.|$,+|
+			Fresh State #8 added to Queue
+>>> Closure:
+	Before: [A|*.FA|$,+|]
+	After:  [A|*.FA|$,+|, F|.(E)|$,*,+|, F|.i|$,*,+|]
+<<<
+		Nxt Elem: * and Created state: A|*.FA|$,+|,F|.(E)|$,*,+|,F|.i|$,*,+|
+			Fresh State #9 added to Queue
+		. Updated the topState #3:A|.*FA|$,+|,A|.|$,+|,T|F.A|$,+| to add NextState: {A=8, *=9}
+* Checking state #4: E|.TB|)|,F|(.E)|$,*,+|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+|
+	Item: F|.(E)|),*,+|
+		... The GOTO: Before: .(E) and After: (.E)
+		Added ((, [F|(.E)|),*,+|]) to the nxtEleMap
+	Item: E|.TB|)|
+		... The GOTO: Before: .TB and After: T.B
+		Added (T, [E|T.B|)|]) to the nxtEleMap
+	Item: F|(.E)|$,*,+|
+		... The GOTO: Before: (.E) and After: (E.)
+		Added (E, [F|(E.)|$,*,+|]) to the nxtEleMap
+	Item: F|.i|),*,+|
+		... The GOTO: Before: .i and After: i.
+		Added (i, [F|i.|),*,+|]) to the nxtEleMap
+	Item: T|.FA|),+|
+		... The GOTO: Before: .FA and After: F.A
+		Added (F, [T|F.A|),+|]) to the nxtEleMap
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [E|T.B|)|]
+	After:  [E|T.B|)|, B|.+TB|)|, B|.|)|]
+<<<
+		Nxt Elem: T and Created state: B|.+TB|)|,B|.|)|,E|T.B|)|
+			Fresh State #10 added to Queue
+>>> Closure:
+	Before: [F|(E.)|$,*,+|]
+	After:  [F|(E.)|$,*,+|]
+<<<
+		Nxt Elem: E and Created state: F|(E.)|$,*,+|
+			Fresh State #11 added to Queue
+>>> Closure:
+	Before: [T|F.A|),+|]
+	After:  [A|.|),+|, A|.*FA|),+|, T|F.A|),+|]
+<<<
+		Nxt Elem: F and Created state: A|.*FA|),+|,A|.|),+|,T|F.A|),+|
+			Fresh State #12 added to Queue
+>>> Closure:
+	Before: [F|(.E)|),*,+|]
+	After:  [F|.i|),*,+|, T|.FA|),+|, F|(.E)|),*,+|, F|.(E)|),*,+|, E|.TB|)|]
+<<<
+		Nxt Elem: ( and Created state: E|.TB|)|,F|(.E)|),*,+|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+|
+			Fresh State #13 added to Queue
+>>> Closure:
+	Before: [F|i.|),*,+|]
+	After:  [F|i.|),*,+|]
+<<<
+		Nxt Elem: i and Created state: F|i.|),*,+|
+			Fresh State #14 added to Queue
+		. Updated the topState #4:E|.TB|)|,F|(.E)|$,*,+|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+| to add NextState: {T=10, E=11, F=12, (=13, i=14}
+* Checking state #5: F|i.|$,*,+|
+	Item: F|i.|$,*,+|
+	-- Completed grouping the Items based on nextElement
+		. Updated the topState #5:F|i.|$,*,+| to add NextState: {}
+* Checking state #6: E|TB.|$|
+	Item: E|TB.|$|
+	-- Completed grouping the Items based on nextElement
+		. Updated the topState #6:E|TB.|$| to add NextState: {}
+* Checking state #7: B|+.TB|$|,F|.(E)|$,*,+|,F|.i|$,*,+|,T|.FA|$,+|
+	Item: T|.FA|$,+|
+		... The GOTO: Before: .FA and After: F.A
+		Added (F, [T|F.A|$,+|]) to the nxtEleMap
+	Item: F|.(E)|$,*,+|
+		... The GOTO: Before: .(E) and After: (.E)
+		Added ((, [F|(.E)|$,*,+|]) to the nxtEleMap
+	Item: F|.i|$,*,+|
+		... The GOTO: Before: .i and After: i.
+		Added (i, [F|i.|$,*,+|]) to the nxtEleMap
+	Item: B|+.TB|$|
+		... The GOTO: Before: +.TB and After: +T.B
+		Added (T, [B|+T.B|$|]) to the nxtEleMap
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [B|+T.B|$|]
+	After:  [B|.+TB|$|, B|.|$|, B|+T.B|$|]
+<<<
+		Nxt Elem: T and Created state: B|+T.B|$|,B|.+TB|$|,B|.|$|
+			Fresh State #15 added to Queue
+>>> Closure:
+	Before: [T|F.A|$,+|]
+	After:  [A|.*FA|$,+|, A|.|$,+|, T|F.A|$,+|]
+<<<
+		Nxt Elem: F and Created state: A|.*FA|$,+|,A|.|$,+|,T|F.A|$,+|
+			! Duplicate with state# : 3
+>>> Closure:
+	Before: [F|(.E)|$,*,+|]
+	After:  [T|.FA|),+|, F|(.E)|$,*,+|, F|.i|),*,+|, E|.TB|)|, F|.(E)|),*,+|]
+<<<
+		Nxt Elem: ( and Created state: E|.TB|)|,F|(.E)|$,*,+|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+|
+			! Duplicate with state# : 4
+>>> Closure:
+	Before: [F|i.|$,*,+|]
+	After:  [F|i.|$,*,+|]
+<<<
+		Nxt Elem: i and Created state: F|i.|$,*,+|
+			! Duplicate with state# : 5
+		. Updated the topState #7:B|+.TB|$|,F|.(E)|$,*,+|,F|.i|$,*,+|,T|.FA|$,+| to add NextState: {T=15, F=3, (=4, i=5}
+* Checking state #8: T|FA.|$,+|
+	Item: T|FA.|$,+|
+	-- Completed grouping the Items based on nextElement
+		. Updated the topState #8:T|FA.|$,+| to add NextState: {}
+* Checking state #9: A|*.FA|$,+|,F|.(E)|$,*,+|,F|.i|$,*,+|
+	Item: A|*.FA|$,+|
+		... The GOTO: Before: *.FA and After: *F.A
+		Added (F, [A|*F.A|$,+|]) to the nxtEleMap
+	Item: F|.(E)|$,*,+|
+		... The GOTO: Before: .(E) and After: (.E)
+		Added ((, [F|(.E)|$,*,+|]) to the nxtEleMap
+	Item: F|.i|$,*,+|
+		... The GOTO: Before: .i and After: i.
+		Added (i, [F|i.|$,*,+|]) to the nxtEleMap
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [A|*F.A|$,+|]
+	After:  [A|.*FA|$,+|, A|.|$,+|, A|*F.A|$,+|]
+<<<
+		Nxt Elem: F and Created state: A|*F.A|$,+|,A|.*FA|$,+|,A|.|$,+|
+			Fresh State #16 added to Queue
+>>> Closure:
+	Before: [F|(.E)|$,*,+|]
+	After:  [E|.TB|)|, F|.(E)|),*,+|, F|(.E)|$,*,+|, T|.FA|),+|, F|.i|),*,+|]
+<<<
+		Nxt Elem: ( and Created state: E|.TB|)|,F|(.E)|$,*,+|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+|
+			! Duplicate with state# : 4
+>>> Closure:
+	Before: [F|i.|$,*,+|]
+	After:  [F|i.|$,*,+|]
+<<<
+		Nxt Elem: i and Created state: F|i.|$,*,+|
+			! Duplicate with state# : 5
+		. Updated the topState #9:A|*.FA|$,+|,F|.(E)|$,*,+|,F|.i|$,*,+| to add NextState: {F=16, (=4, i=5}
+* Checking state #10: B|.+TB|)|,B|.|)|,E|T.B|)|
+	Item: E|T.B|)|
+		... The GOTO: Before: T.B and After: TB.
+		Added (B, [E|TB.|)|]) to the nxtEleMap
+	Item: B|.+TB|)|
+		... The GOTO: Before: .+TB and After: +.TB
+		Added (+, [B|+.TB|)|]) to the nxtEleMap
+	Item: B|.|)|
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [E|TB.|)|]
+	After:  [E|TB.|)|]
+<<<
+		Nxt Elem: B and Created state: E|TB.|)|
+			Fresh State #17 added to Queue
+>>> Closure:
+	Before: [B|+.TB|)|]
+	After:  [F|.i|),*,+|, T|.FA|),+|, F|.(E)|),*,+|, B|+.TB|)|]
+<<<
+		Nxt Elem: + and Created state: B|+.TB|)|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+|
+			Fresh State #18 added to Queue
+		. Updated the topState #10:B|.+TB|)|,B|.|)|,E|T.B|)| to add NextState: {B=17, +=18}
+* Checking state #11: F|(E.)|$,*,+|
+	Item: F|(E.)|$,*,+|
+		... The GOTO: Before: (E.) and After: (E).
+		Added (), [F|(E).|$,*,+|]) to the nxtEleMap
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [F|(E).|$,*,+|]
+	After:  [F|(E).|$,*,+|]
+<<<
+		Nxt Elem: ) and Created state: F|(E).|$,*,+|
+			Fresh State #19 added to Queue
+		. Updated the topState #11:F|(E.)|$,*,+| to add NextState: {)=19}
+* Checking state #12: A|.*FA|),+|,A|.|),+|,T|F.A|),+|
+	Item: A|.|),+|
+	Item: A|.*FA|),+|
+		... The GOTO: Before: .*FA and After: *.FA
+		Added (*, [A|*.FA|),+|]) to the nxtEleMap
+	Item: T|F.A|),+|
+		... The GOTO: Before: F.A and After: FA.
+		Added (A, [T|FA.|),+|]) to the nxtEleMap
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [T|FA.|),+|]
+	After:  [T|FA.|),+|]
+<<<
+		Nxt Elem: A and Created state: T|FA.|),+|
+			Fresh State #20 added to Queue
+>>> Closure:
+	Before: [A|*.FA|),+|]
+	After:  [F|.i|),*,+|, A|*.FA|),+|, F|.(E)|),*,+|]
+<<<
+		Nxt Elem: * and Created state: A|*.FA|),+|,F|.(E)|),*,+|,F|.i|),*,+|
+			Fresh State #21 added to Queue
+		. Updated the topState #12:A|.*FA|),+|,A|.|),+|,T|F.A|),+| to add NextState: {A=20, *=21}
+* Checking state #13: E|.TB|)|,F|(.E)|),*,+|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+|
+	Item: F|.i|),*,+|
+		... The GOTO: Before: .i and After: i.
+		Added (i, [F|i.|),*,+|]) to the nxtEleMap
+	Item: T|.FA|),+|
+		... The GOTO: Before: .FA and After: F.A
+		Added (F, [T|F.A|),+|]) to the nxtEleMap
+	Item: F|(.E)|),*,+|
+		... The GOTO: Before: (.E) and After: (E.)
+		Added (E, [F|(E.)|),*,+|]) to the nxtEleMap
+	Item: F|.(E)|),*,+|
+		... The GOTO: Before: .(E) and After: (.E)
+		Added ((, [F|(.E)|),*,+|]) to the nxtEleMap
+	Item: E|.TB|)|
+		... The GOTO: Before: .TB and After: T.B
+		Added (T, [E|T.B|)|]) to the nxtEleMap
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [E|T.B|)|]
+	After:  [B|.+TB|)|, E|T.B|)|, B|.|)|]
+<<<
+		Nxt Elem: T and Created state: B|.+TB|)|,B|.|)|,E|T.B|)|
+			! Duplicate with state# : 10
+>>> Closure:
+	Before: [F|(E.)|),*,+|]
+	After:  [F|(E.)|),*,+|]
+<<<
+		Nxt Elem: E and Created state: F|(E.)|),*,+|
+			Fresh State #22 added to Queue
+>>> Closure:
+	Before: [T|F.A|),+|]
+	After:  [A|.*FA|),+|, T|F.A|),+|, A|.|),+|]
+<<<
+		Nxt Elem: F and Created state: A|.*FA|),+|,A|.|),+|,T|F.A|),+|
+			! Duplicate with state# : 12
+>>> Closure:
+	Before: [F|(.E)|),*,+|]
+	After:  [T|.FA|),+|, F|(.E)|),*,+|, E|.TB|)|, F|.(E)|),*,+|, F|.i|),*,+|]
+<<<
+		Nxt Elem: ( and Created state: E|.TB|)|,F|(.E)|),*,+|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+|
+			! Duplicate with state# : 13
+>>> Closure:
+	Before: [F|i.|),*,+|]
+	After:  [F|i.|),*,+|]
+<<<
+		Nxt Elem: i and Created state: F|i.|),*,+|
+			! Duplicate with state# : 14
+		. Updated the topState #13:E|.TB|)|,F|(.E)|),*,+|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+| to add NextState: {T=10, E=22, F=12, (=13, i=14}
+* Checking state #14: F|i.|),*,+|
+	Item: F|i.|),*,+|
+	-- Completed grouping the Items based on nextElement
+		. Updated the topState #14:F|i.|),*,+| to add NextState: {}
+* Checking state #15: B|+T.B|$|,B|.+TB|$|,B|.|$|
+	Item: B|.+TB|$|
+		... The GOTO: Before: .+TB and After: +.TB
+		Added (+, [B|+.TB|$|]) to the nxtEleMap
+	Item: B|.|$|
+	Item: B|+T.B|$|
+		... The GOTO: Before: +T.B and After: +TB.
+		Added (B, [B|+TB.|$|]) to the nxtEleMap
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [B|+TB.|$|]
+	After:  [B|+TB.|$|]
+<<<
+		Nxt Elem: B and Created state: B|+TB.|$|
+			Fresh State #23 added to Queue
+>>> Closure:
+	Before: [B|+.TB|$|]
+	After:  [F|.(E)|$,*,+|, T|.FA|$,+|, B|+.TB|$|, F|.i|$,*,+|]
+<<<
+		Nxt Elem: + and Created state: B|+.TB|$|,F|.(E)|$,*,+|,F|.i|$,*,+|,T|.FA|$,+|
+			! Duplicate with state# : 7
+		. Updated the topState #15:B|+T.B|$|,B|.+TB|$|,B|.|$| to add NextState: {B=23, +=7}
+* Checking state #16: A|*F.A|$,+|,A|.*FA|$,+|,A|.|$,+|
+	Item: A|.*FA|$,+|
+		... The GOTO: Before: .*FA and After: *.FA
+		Added (*, [A|*.FA|$,+|]) to the nxtEleMap
+	Item: A|.|$,+|
+	Item: A|*F.A|$,+|
+		... The GOTO: Before: *F.A and After: *FA.
+		Added (A, [A|*FA.|$,+|]) to the nxtEleMap
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [A|*FA.|$,+|]
+	After:  [A|*FA.|$,+|]
+<<<
+		Nxt Elem: A and Created state: A|*FA.|$,+|
+			Fresh State #24 added to Queue
+>>> Closure:
+	Before: [A|*.FA|$,+|]
+	After:  [A|*.FA|$,+|, F|.(E)|$,*,+|, F|.i|$,*,+|]
+<<<
+		Nxt Elem: * and Created state: A|*.FA|$,+|,F|.(E)|$,*,+|,F|.i|$,*,+|
+			! Duplicate with state# : 9
+		. Updated the topState #16:A|*F.A|$,+|,A|.*FA|$,+|,A|.|$,+| to add NextState: {A=24, *=9}
+* Checking state #17: E|TB.|)|
+	Item: E|TB.|)|
+	-- Completed grouping the Items based on nextElement
+		. Updated the topState #17:E|TB.|)| to add NextState: {}
+* Checking state #18: B|+.TB|)|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+|
+	Item: F|.i|),*,+|
+		... The GOTO: Before: .i and After: i.
+		Added (i, [F|i.|),*,+|]) to the nxtEleMap
+	Item: T|.FA|),+|
+		... The GOTO: Before: .FA and After: F.A
+		Added (F, [T|F.A|),+|]) to the nxtEleMap
+	Item: F|.(E)|),*,+|
+		... The GOTO: Before: .(E) and After: (.E)
+		Added ((, [F|(.E)|),*,+|]) to the nxtEleMap
+	Item: B|+.TB|)|
+		... The GOTO: Before: +.TB and After: +T.B
+		Added (T, [B|+T.B|)|]) to the nxtEleMap
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [B|+T.B|)|]
+	After:  [B|+T.B|)|, B|.+TB|)|, B|.|)|]
+<<<
+		Nxt Elem: T and Created state: B|+T.B|)|,B|.+TB|)|,B|.|)|
+			Fresh State #25 added to Queue
+>>> Closure:
+	Before: [T|F.A|),+|]
+	After:  [A|.*FA|),+|, T|F.A|),+|, A|.|),+|]
+<<<
+		Nxt Elem: F and Created state: A|.*FA|),+|,A|.|),+|,T|F.A|),+|
+			! Duplicate with state# : 12
+>>> Closure:
+	Before: [F|(.E)|),*,+|]
+	After:  [F|.i|),*,+|, F|.(E)|),*,+|, E|.TB|)|, F|(.E)|),*,+|, T|.FA|),+|]
+<<<
+		Nxt Elem: ( and Created state: E|.TB|)|,F|(.E)|),*,+|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+|
+			! Duplicate with state# : 13
+>>> Closure:
+	Before: [F|i.|),*,+|]
+	After:  [F|i.|),*,+|]
+<<<
+		Nxt Elem: i and Created state: F|i.|),*,+|
+			! Duplicate with state# : 14
+		. Updated the topState #18:B|+.TB|)|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+| to add NextState: {T=25, F=12, (=13, i=14}
+* Checking state #19: F|(E).|$,*,+|
+	Item: F|(E).|$,*,+|
+	-- Completed grouping the Items based on nextElement
+		. Updated the topState #19:F|(E).|$,*,+| to add NextState: {}
+* Checking state #20: T|FA.|),+|
+	Item: T|FA.|),+|
+	-- Completed grouping the Items based on nextElement
+		. Updated the topState #20:T|FA.|),+| to add NextState: {}
+* Checking state #21: A|*.FA|),+|,F|.(E)|),*,+|,F|.i|),*,+|
+	Item: F|.i|),*,+|
+		... The GOTO: Before: .i and After: i.
+		Added (i, [F|i.|),*,+|]) to the nxtEleMap
+	Item: A|*.FA|),+|
+		... The GOTO: Before: *.FA and After: *F.A
+		Added (F, [A|*F.A|),+|]) to the nxtEleMap
+	Item: F|.(E)|),*,+|
+		... The GOTO: Before: .(E) and After: (.E)
+		Added ((, [F|(.E)|),*,+|]) to the nxtEleMap
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [A|*F.A|),+|]
+	After:  [A|*F.A|),+|, A|.|),+|, A|.*FA|),+|]
+<<<
+		Nxt Elem: F and Created state: A|*F.A|),+|,A|.*FA|),+|,A|.|),+|
+			Fresh State #26 added to Queue
+>>> Closure:
+	Before: [F|(.E)|),*,+|]
+	After:  [E|.TB|)|, T|.FA|),+|, F|(.E)|),*,+|, F|.(E)|),*,+|, F|.i|),*,+|]
+<<<
+		Nxt Elem: ( and Created state: E|.TB|)|,F|(.E)|),*,+|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+|
+			! Duplicate with state# : 13
+>>> Closure:
+	Before: [F|i.|),*,+|]
+	After:  [F|i.|),*,+|]
+<<<
+		Nxt Elem: i and Created state: F|i.|),*,+|
+			! Duplicate with state# : 14
+		. Updated the topState #21:A|*.FA|),+|,F|.(E)|),*,+|,F|.i|),*,+| to add NextState: {F=26, (=13, i=14}
+* Checking state #22: F|(E.)|),*,+|
+	Item: F|(E.)|),*,+|
+		... The GOTO: Before: (E.) and After: (E).
+		Added (), [F|(E).|),*,+|]) to the nxtEleMap
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [F|(E).|),*,+|]
+	After:  [F|(E).|),*,+|]
+<<<
+		Nxt Elem: ) and Created state: F|(E).|),*,+|
+			Fresh State #27 added to Queue
+		. Updated the topState #22:F|(E.)|),*,+| to add NextState: {)=27}
+* Checking state #23: B|+TB.|$|
+	Item: B|+TB.|$|
+	-- Completed grouping the Items based on nextElement
+		. Updated the topState #23:B|+TB.|$| to add NextState: {}
+* Checking state #24: A|*FA.|$,+|
+	Item: A|*FA.|$,+|
+	-- Completed grouping the Items based on nextElement
+		. Updated the topState #24:A|*FA.|$,+| to add NextState: {}
+* Checking state #25: B|+T.B|)|,B|.+TB|)|,B|.|)|
+	Item: B|+T.B|)|
+		... The GOTO: Before: +T.B and After: +TB.
+		Added (B, [B|+TB.|)|]) to the nxtEleMap
+	Item: B|.+TB|)|
+		... The GOTO: Before: .+TB and After: +.TB
+		Added (+, [B|+.TB|)|]) to the nxtEleMap
+	Item: B|.|)|
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [B|+TB.|)|]
+	After:  [B|+TB.|)|]
+<<<
+		Nxt Elem: B and Created state: B|+TB.|)|
+			Fresh State #28 added to Queue
+>>> Closure:
+	Before: [B|+.TB|)|]
+	After:  [F|.(E)|),*,+|, B|+.TB|)|, T|.FA|),+|, F|.i|),*,+|]
+<<<
+		Nxt Elem: + and Created state: B|+.TB|)|,F|.(E)|),*,+|,F|.i|),*,+|,T|.FA|),+|
+			! Duplicate with state# : 18
+		. Updated the topState #25:B|+T.B|)|,B|.+TB|)|,B|.|)| to add NextState: {B=28, +=18}
+* Checking state #26: A|*F.A|),+|,A|.*FA|),+|,A|.|),+|
+	Item: A|*F.A|),+|
+		... The GOTO: Before: *F.A and After: *FA.
+		Added (A, [A|*FA.|),+|]) to the nxtEleMap
+	Item: A|.|),+|
+	Item: A|.*FA|),+|
+		... The GOTO: Before: .*FA and After: *.FA
+		Added (*, [A|*.FA|),+|]) to the nxtEleMap
+	-- Completed grouping the Items based on nextElement
+>>> Closure:
+	Before: [A|*FA.|),+|]
+	After:  [A|*FA.|),+|]
+<<<
+		Nxt Elem: A and Created state: A|*FA.|),+|
+			Fresh State #29 added to Queue
+>>> Closure:
+	Before: [A|*.FA|),+|]
+	After:  [A|*.FA|),+|, F|.i|),*,+|, F|.(E)|),*,+|]
+<<<
+		Nxt Elem: * and Created state: A|*.FA|),+|,F|.(E)|),*,+|,F|.i|),*,+|
+			! Duplicate with state# : 21
+		. Updated the topState #26:A|*F.A|),+|,A|.*FA|),+|,A|.|),+| to add NextState: {A=29, *=21}
+* Checking state #27: F|(E).|),*,+|
+	Item: F|(E).|),*,+|
+	-- Completed grouping the Items based on nextElement
+		. Updated the topState #27:F|(E).|),*,+| to add NextState: {}
+* Checking state #28: B|+TB.|)|
+	Item: B|+TB.|)|
+	-- Completed grouping the Items based on nextElement
+		. Updated the topState #28:B|+TB.|)| to add NextState: {}
+* Checking state #29: A|*FA.|),+|
+	Item: A|*FA.|),+|
+	-- Completed grouping the Items based on nextElement
+		. Updated the topState #29:A|*FA.|),+| to add NextState: {}
+
+==============================================
+THE DFA CONSTRUCTED:
+
+State ID: 0
+	Item #0: T -> .FA | [$, +]
+	Item #1: E' -> .E | [$]
+	Item #2: F -> .(E) | [$, *, +]
+	Item #3: E -> .TB | [$]
+	Item #4: F -> .i | [$, *, +]
+	Next: {T=1, E=2, F=3, (=4, i=5}
+	------------------------------
+State ID: 1
+	Item #0: E -> T.B | [$]
+	Item #1: B -> .+TB | [$]
+	Item #2: B -> . | [$]
+	Next: {B=6, +=7}
+	------------------------------
+State ID: 2
+	Item #0: E' -> E. | [$]
+	Next: {}
+	------------------------------
+State ID: 3
+	Item #0: T -> F.A | [$, +]
+	Item #1: A -> . | [$, +]
+	Item #2: A -> .*FA | [$, +]
+	Next: {A=8, *=9}
+	------------------------------
+State ID: 4
+	Item #0: F -> .(E) | [), *, +]
+	Item #1: E -> .TB | [)]
+	Item #2: F -> (.E) | [$, *, +]
+	Item #3: F -> .i | [), *, +]
+	Item #4: T -> .FA | [), +]
+	Next: {T=10, E=11, F=12, (=13, i=14}
+	------------------------------
+State ID: 5
+	Item #0: F -> i. | [$, *, +]
+	Next: {}
+	------------------------------
+State ID: 6
+	Item #0: E -> TB. | [$]
+	Next: {}
+	------------------------------
+State ID: 7
+	Item #0: T -> .FA | [$, +]
+	Item #1: F -> .(E) | [$, *, +]
+	Item #2: F -> .i | [$, *, +]
+	Item #3: B -> +.TB | [$]
+	Next: {T=15, F=3, (=4, i=5}
+	------------------------------
+State ID: 8
+	Item #0: T -> FA. | [$, +]
+	Next: {}
+	------------------------------
+State ID: 9
+	Item #0: A -> *.FA | [$, +]
+	Item #1: F -> .(E) | [$, *, +]
+	Item #2: F -> .i | [$, *, +]
+	Next: {F=16, (=4, i=5}
+	------------------------------
+State ID: 10
+	Item #0: E -> T.B | [)]
+	Item #1: B -> .+TB | [)]
+	Item #2: B -> . | [)]
+	Next: {B=17, +=18}
+	------------------------------
+State ID: 11
+	Item #0: F -> (E.) | [$, *, +]
+	Next: {)=19}
+	------------------------------
+State ID: 12
+	Item #0: A -> . | [), +]
+	Item #1: A -> .*FA | [), +]
+	Item #2: T -> F.A | [), +]
+	Next: {A=20, *=21}
+	------------------------------
+State ID: 13
+	Item #0: F -> .i | [), *, +]
+	Item #1: T -> .FA | [), +]
+	Item #2: F -> (.E) | [), *, +]
+	Item #3: F -> .(E) | [), *, +]
+	Item #4: E -> .TB | [)]
+	Next: {T=10, E=22, F=12, (=13, i=14}
+	------------------------------
+State ID: 14
+	Item #0: F -> i. | [), *, +]
+	Next: {}
+	------------------------------
+State ID: 15
+	Item #0: B -> .+TB | [$]
+	Item #1: B -> . | [$]
+	Item #2: B -> +T.B | [$]
+	Next: {B=23, +=7}
+	------------------------------
+State ID: 16
+	Item #0: A -> .*FA | [$, +]
+	Item #1: A -> . | [$, +]
+	Item #2: A -> *F.A | [$, +]
+	Next: {A=24, *=9}
+	------------------------------
+State ID: 17
+	Item #0: E -> TB. | [)]
+	Next: {}
+	------------------------------
+State ID: 18
+	Item #0: F -> .i | [), *, +]
+	Item #1: T -> .FA | [), +]
+	Item #2: F -> .(E) | [), *, +]
+	Item #3: B -> +.TB | [)]
+	Next: {T=25, F=12, (=13, i=14}
+	------------------------------
+State ID: 19
+	Item #0: F -> (E). | [$, *, +]
+	Next: {}
+	------------------------------
+State ID: 20
+	Item #0: T -> FA. | [), +]
+	Next: {}
+	------------------------------
+State ID: 21
+	Item #0: F -> .i | [), *, +]
+	Item #1: A -> *.FA | [), +]
+	Item #2: F -> .(E) | [), *, +]
+	Next: {F=26, (=13, i=14}
+	------------------------------
+State ID: 22
+	Item #0: F -> (E.) | [), *, +]
+	Next: {)=27}
+	------------------------------
+State ID: 23
+	Item #0: B -> +TB. | [$]
+	Next: {}
+	------------------------------
+State ID: 24
+	Item #0: A -> *FA. | [$, +]
+	Next: {}
+	------------------------------
+State ID: 25
+	Item #0: B -> +T.B | [)]
+	Item #1: B -> .+TB | [)]
+	Item #2: B -> . | [)]
+	Next: {B=28, +=18}
+	------------------------------
+State ID: 26
+	Item #0: A -> *F.A | [), +]
+	Item #1: A -> . | [), +]
+	Item #2: A -> .*FA | [), +]
+	Next: {A=29, *=21}
+	------------------------------
+State ID: 27
+	Item #0: F -> (E). | [), *, +]
+	Next: {}
+	------------------------------
+State ID: 28
+	Item #0: B -> +TB. | [)]
+	Next: {}
+	------------------------------
+State ID: 29
+	Item #0: A -> *FA. | [), +]
+	Next: {}
+	------------------------------
+==============================================
+
+===========================================
+THE PARSE TABLE
+
+     State	         +	         *	         (	         )	         i	         $	         A	         B	         T	         E	         F
+         0	         -	         -	        S4	         -	        S5	         -	         -	         -	        G1	        G2	        G3
+         1	        S7	         -	         -	         -	         -	       RB|	         -	        G6	         -	         -	         -
+         2	         -	         -	         -	         -	         -	       Acc	         -	         -	         -	         -	         -
+         3	       RA|	        S9	         -	         -	         -	       RA|	        G8	         -	         -	         -	         -
+         4	         -	         -	       S13	         -	       S14	         -	         -	         -	       G10	       G11	       G12
+         5	      RF|i	      RF|i	         -	         -	         -	      RF|i	         -	         -	         -	         -	         -
+         6	         -	         -	         -	         -	         -	     RE|TB	         -	         -	         -	         -	         -
+         7	         -	         -	        S4	         -	        S5	         -	         -	         -	       G15	         -	        G3
+         8	     RT|FA	         -	         -	         -	         -	     RT|FA	         -	         -	         -	         -	         -
+         9	         -	         -	        S4	         -	        S5	         -	         -	         -	         -	         -	       G16
+        10	       S18	         -	         -	       RB|	         -	         -	         -	       G17	         -	         -	         -
+        11	         -	         -	         -	       S19	         -	         -	         -	         -	         -	         -	         -
+        12	       RA|	       S21	         -	       RA|	         -	         -	       G20	         -	         -	         -	         -
+        13	         -	         -	       S13	         -	       S14	         -	         -	         -	       G10	       G22	       G12
+        14	      RF|i	      RF|i	         -	      RF|i	         -	         -	         -	         -	         -	         -	         -
+        15	        S7	         -	         -	         -	         -	       RB|	         -	       G23	         -	         -	         -
+        16	       RA|	        S9	         -	         -	         -	       RA|	       G24	         -	         -	         -	         -
+        17	         -	         -	         -	     RE|TB	         -	         -	         -	         -	         -	         -	         -
+        18	         -	         -	       S13	         -	       S14	         -	         -	         -	       G25	         -	       G12
+        19	    RF|(E)	    RF|(E)	         -	         -	         -	    RF|(E)	         -	         -	         -	         -	         -
+        20	     RT|FA	         -	         -	     RT|FA	         -	         -	         -	         -	         -	         -	         -
+        21	         -	         -	       S13	         -	       S14	         -	         -	         -	         -	         -	       G26
+        22	         -	         -	         -	       S27	         -	         -	         -	         -	         -	         -	         -
+        23	         -	         -	         -	         -	         -	    RB|+TB	         -	         -	         -	         -	         -
+        24	    RA|*FA	         -	         -	         -	         -	    RA|*FA	         -	         -	         -	         -	         -
+        25	       S18	         -	         -	       RB|	         -	         -	         -	       G28	         -	         -	         -
+        26	       RA|	       S21	         -	       RA|	         -	         -	       G29	         -	         -	         -	         -
+        27	    RF|(E)	    RF|(E)	         -	    RF|(E)	         -	         -	         -	         -	         -	         -	         -
+        28	         -	         -	         -	    RB|+TB	         -	         -	         -	         -	         -	         -	         -
+        29	    RA|*FA	         -	         -	    RA|*FA	         -	         -	         -	         -	         -	         -	         -
+
+===========================================
+
+--------
+ Input String: i*i$
+
+                   STATE STACK	             SYMBOL STACK	       INPUT		ACTION
+                           [0]	                      [$]	        i*i$		BEGIN
+                        [0, 5]	                   [$, i]	         *i$		Shift: S5
+                        [0, 3]	                   [$, F]	         *i$		Reduce: RF|i and Goto: G3
+                     [0, 3, 9]	                [$, F, *]	          i$		Shift: S9
+                  [0, 3, 9, 5]	             [$, F, *, i]	           $		Shift: S5
+                 [0, 3, 9, 16]	             [$, F, *, F]	           $		Reduce: RF|i and Goto: G16
+             [0, 3, 9, 16, 24]	          [$, F, *, F, A]	           $		Reduce: RA| and Goto: G24
+                     [0, 3, 8]	                [$, F, A]	           $		Reduce: RA|*FA and Goto: G8
+                        [0, 1]	                   [$, T]	           $		Reduce: RT|FA and Goto: G1
+                     [0, 1, 6]	                [$, T, B]	           $		Reduce: RB| and Goto: G6
+                        [0, 2]	                   [$, E]	           $		Reduce: RE|TB and Goto: G2
+                        [0, 2]	                   [$, E]	           $		Accept
+--------
+ Input String: ii*$
+
+                   STATE STACK	             SYMBOL STACK	       INPUT		ACTION
+                           [0]	                      [$]	        ii*$		BEGIN
+                        [0, 5]	                   [$, i]	         i*$		Shift: S5
+                        [0, 5]	                   [$, i]	         i*$		`-` Detected. REJECT
+--------
+ Input String: i+i*i$
+
+                   STATE STACK	             SYMBOL STACK	       INPUT		ACTION
+                           [0]	                      [$]	      i+i*i$		BEGIN
+                        [0, 5]	                   [$, i]	       +i*i$		Shift: S5
+                        [0, 3]	                   [$, F]	       +i*i$		Reduce: RF|i and Goto: G3
+                     [0, 3, 8]	                [$, F, A]	       +i*i$		Reduce: RA| and Goto: G8
+                        [0, 1]	                   [$, T]	       +i*i$		Reduce: RT|FA and Goto: G1
+                     [0, 1, 7]	                [$, T, +]	        i*i$		Shift: S7
+                  [0, 1, 7, 5]	             [$, T, +, i]	         *i$		Shift: S5
+                  [0, 1, 7, 3]	             [$, T, +, F]	         *i$		Reduce: RF|i and Goto: G3
+               [0, 1, 7, 3, 9]	          [$, T, +, F, *]	          i$		Shift: S9
+            [0, 1, 7, 3, 9, 5]	       [$, T, +, F, *, i]	           $		Shift: S5
+           [0, 1, 7, 3, 9, 16]	       [$, T, +, F, *, F]	           $		Reduce: RF|i and Goto: G16
+       [0, 1, 7, 3, 9, 16, 24]	    [$, T, +, F, *, F, A]	           $		Reduce: RA| and Goto: G24
+               [0, 1, 7, 3, 8]	          [$, T, +, F, A]	           $		Reduce: RA|*FA and Goto: G8
+                 [0, 1, 7, 15]	             [$, T, +, T]	           $		Reduce: RT|FA and Goto: G15
+             [0, 1, 7, 15, 23]	          [$, T, +, T, B]	           $		Reduce: RB| and Goto: G23
+                     [0, 1, 6]	                [$, T, B]	           $		Reduce: RB|+TB and Goto: G6
+                        [0, 2]	                   [$, E]	           $		Reduce: RE|TB and Goto: G2
+                        [0, 2]	                   [$, E]	           $		Accept
+--------
+ Input String: i++$
+
+                   STATE STACK	             SYMBOL STACK	       INPUT		ACTION
+                           [0]	                      [$]	        i++$		BEGIN
+                        [0, 5]	                   [$, i]	         ++$		Shift: S5
+                        [0, 3]	                   [$, F]	         ++$		Reduce: RF|i and Goto: G3
+                     [0, 3, 8]	                [$, F, A]	         ++$		Reduce: RA| and Goto: G8
+                        [0, 1]	                   [$, T]	         ++$		Reduce: RT|FA and Goto: G1
+                     [0, 1, 7]	                [$, T, +]	          +$		Shift: S7
+                     [0, 1, 7]	                [$, T, +]	          +$		`-` Detected. REJECT
+--------
+ Input String: i+i*$
+
+                   STATE STACK	             SYMBOL STACK	       INPUT		ACTION
+                           [0]	                      [$]	       i+i*$		BEGIN
+                        [0, 5]	                   [$, i]	        +i*$		Shift: S5
+                        [0, 3]	                   [$, F]	        +i*$		Reduce: RF|i and Goto: G3
+                     [0, 3, 8]	                [$, F, A]	        +i*$		Reduce: RA| and Goto: G8
+                        [0, 1]	                   [$, T]	        +i*$		Reduce: RT|FA and Goto: G1
+                     [0, 1, 7]	                [$, T, +]	         i*$		Shift: S7
+                  [0, 1, 7, 5]	             [$, T, +, i]	          *$		Shift: S5
+                  [0, 1, 7, 3]	             [$, T, +, F]	          *$		Reduce: RF|i and Goto: G3
+               [0, 1, 7, 3, 9]	          [$, T, +, F, *]	           $		Shift: S9
+               [0, 1, 7, 3, 9]	          [$, T, +, F, *]	           $		`-` Detected. REJECT
+--------
+
+
+Process finished with exit code 0

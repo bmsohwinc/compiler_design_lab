@@ -1,0 +1,4 @@
+S
+a b
+S abbb
+S aSSbS aSaSb abb b
