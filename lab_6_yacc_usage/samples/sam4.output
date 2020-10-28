@@ -1,0 +1,118 @@
+Grammar
+
+    0 $accept: mystart $end
+
+    1 mystart: mystart rhyme NEWL
+    2        | %empty
+
+    3 rhyme: %empty
+    4      | okgo place
+
+    5 okgo: DING DONG
+
+    6 place: DELL
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+DING (258) 5
+DONG (259) 5
+DELL (260) 6
+NEWL (261) 1
+
+
+Nonterminals, with rules where they appear
+
+$accept (7)
+    on left: 0
+mystart (8)
+    on left: 1 2, on right: 0 1
+rhyme (9)
+    on left: 3 4, on right: 1
+okgo (10)
+    on left: 5, on right: 4
+place (11)
+    on left: 6, on right: 4
+
+
+State 0
+
+    0 $accept: . mystart $end
+
+    $default  reduce using rule 2 (mystart)
+
+    mystart  go to state 1
+
+
+State 1
+
+    0 $accept: mystart . $end
+    1 mystart: mystart . rhyme NEWL
+
+    $end  shift, and go to state 2
+    DING  shift, and go to state 3
+
+    $default  reduce using rule 3 (rhyme)
+
+    rhyme  go to state 4
+    okgo   go to state 5
+
+
+State 2
+
+    0 $accept: mystart $end .
+
+    $default  accept
+
+
+State 3
+
+    5 okgo: DING . DONG
+
+    DONG  shift, and go to state 6
+
+
+State 4
+
+    1 mystart: mystart rhyme . NEWL
+
+    NEWL  shift, and go to state 7
+
+
+State 5
+
+    4 rhyme: okgo . place
+
+    DELL  shift, and go to state 8
+
+    place  go to state 9
+
+
+State 6
+
+    5 okgo: DING DONG .
+
+    $default  reduce using rule 5 (okgo)
+
+
+State 7
+
+    1 mystart: mystart rhyme NEWL .
+
+    $default  reduce using rule 1 (mystart)
+
+
+State 8
+
+    6 place: DELL .
+
+    $default  reduce using rule 6 (place)
+
+
+State 9
+
+    4 rhyme: okgo place .
+
+    $default  reduce using rule 4 (rhyme)

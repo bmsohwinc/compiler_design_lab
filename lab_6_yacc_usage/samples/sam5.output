@@ -1,0 +1,201 @@
+Grammar
+
+    0 $accept: mystart $end
+
+    1 mystart: %empty
+    2        | mystart expr NEWL
+    3        | NEWL
+
+    4 expr: expr PLUS term
+    5     | expr MINUS term
+    6     | term
+
+    7 term: term CROSS fact
+    8     | term DIV fact
+    9     | fact
+
+   10 fact: NUM
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+NUM (258) 10
+NEWL (259) 2 3
+PLUS (260) 4
+MINUS (261) 5
+CROSS (262) 7
+DIV (263) 8
+
+
+Nonterminals, with rules where they appear
+
+$accept (9)
+    on left: 0
+mystart (10)
+    on left: 1 2 3, on right: 0 2
+expr (11)
+    on left: 4 5 6, on right: 2 4 5
+term (12)
+    on left: 7 8 9, on right: 4 5 6 7 8
+fact (13)
+    on left: 10, on right: 7 8 9
+
+
+State 0
+
+    0 $accept: . mystart $end
+
+    NEWL  shift, and go to state 1
+
+    $default  reduce using rule 1 (mystart)
+
+    mystart  go to state 2
+
+
+State 1
+
+    3 mystart: NEWL .
+
+    $default  reduce using rule 3 (mystart)
+
+
+State 2
+
+    0 $accept: mystart . $end
+    2 mystart: mystart . expr NEWL
+
+    $end  shift, and go to state 3
+    NUM   shift, and go to state 4
+
+    expr  go to state 5
+    term  go to state 6
+    fact  go to state 7
+
+
+State 3
+
+    0 $accept: mystart $end .
+
+    $default  accept
+
+
+State 4
+
+   10 fact: NUM .
+
+    $default  reduce using rule 10 (fact)
+
+
+State 5
+
+    2 mystart: mystart expr . NEWL
+    4 expr: expr . PLUS term
+    5     | expr . MINUS term
+
+    NEWL   shift, and go to state 8
+    PLUS   shift, and go to state 9
+    MINUS  shift, and go to state 10
+
+
+State 6
+
+    6 expr: term .
+    7 term: term . CROSS fact
+    8     | term . DIV fact
+
+    CROSS  shift, and go to state 11
+    DIV    shift, and go to state 12
+
+    $default  reduce using rule 6 (expr)
+
+
+State 7
+
+    9 term: fact .
+
+    $default  reduce using rule 9 (term)
+
+
+State 8
+
+    2 mystart: mystart expr NEWL .
+
+    $default  reduce using rule 2 (mystart)
+
+
+State 9
+
+    4 expr: expr PLUS . term
+
+    NUM  shift, and go to state 4
+
+    term  go to state 13
+    fact  go to state 7
+
+
+State 10
+
+    5 expr: expr MINUS . term
+
+    NUM  shift, and go to state 4
+
+    term  go to state 14
+    fact  go to state 7
+
+
+State 11
+
+    7 term: term CROSS . fact
+
+    NUM  shift, and go to state 4
+
+    fact  go to state 15
+
+
+State 12
+
+    8 term: term DIV . fact
+
+    NUM  shift, and go to state 4
+
+    fact  go to state 16
+
+
+State 13
+
+    4 expr: expr PLUS term .
+    7 term: term . CROSS fact
+    8     | term . DIV fact
+
+    CROSS  shift, and go to state 11
+    DIV    shift, and go to state 12
+
+    $default  reduce using rule 4 (expr)
+
+
+State 14
+
+    5 expr: expr MINUS term .
+    7 term: term . CROSS fact
+    8     | term . DIV fact
+
+    CROSS  shift, and go to state 11
+    DIV    shift, and go to state 12
+
+    $default  reduce using rule 5 (expr)
+
+
+State 15
+
+    7 term: term CROSS fact .
+
+    $default  reduce using rule 7 (term)
+
+
+State 16
+
+    8 term: term DIV fact .
+
+    $default  reduce using rule 8 (term)
