@@ -175,7 +175,7 @@ void yyerror(char *s){
 }
 
 int main(){
-    yyin = fopen("input1.txt", "r");
+    yyin = fopen("input3.txt", "r");
 	yyparse();
 	return 0;
 }

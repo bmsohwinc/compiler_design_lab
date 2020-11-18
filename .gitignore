@@ -1,0 +1,9 @@
+*/*.pdf
+pdf
+*.pdf
+*.zip
+*/*.zip
+*/*/*.pdf
+*/*/*.zip
+*/*/*/*.zip
+
